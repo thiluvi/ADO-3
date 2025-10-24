@@ -1,0 +1,35 @@
+CREATE DATABASE ado;
+ 
+USE ado;
+ 
+CREATE TABLE usuario(
+id_usuario INT AUTO_INCREMENT PRIMARY KEY ,
+nome VARCHAR(100),
+email VARCHAR(200),
+senha VARCHAR(300),
+nome_usuario VARCHAR(200),
+data_criacao DATE
+);
+ 
+CREATE TABLE produto(
+id_produto INT AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR(200),
+preco DECIMAL(15,2),
+descricao VARCHAR(500),
+disponivel BOOLEAN,
+data_postagem DATE,
+imagem VARCHAR(500),
+id_usuario INT,
+FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+ 
+CREATE TABLE proposta(
+id_proposta INT AUTO_INCREMENT PRIMARY KEY,
+valor DECIMAL(15, 2),
+data_proposta DATE,
+status_produto VARCHAR(100),
+id_produto INT,
+FOREIGN KEY (id_produto) REFERENCES produto(id_produto),
+id_usuario INT,
+FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
