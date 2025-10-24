@@ -1,13 +1,12 @@
 import { connection } from './connection.js';
 
-
 export async function criarConta(novaConta) {
   const comando = `
     INSERT INTO usuario (nome, email, senha, nome_usuario, data_criacao)
                VALUES (?, ?, MD5(?), ?, ?);
   `;
 
-  const [info] = await conection.query(comando, [
+  const [info] = await connection.query(comando, [
     novaConta.nome,
     novaConta.email,
     novaConta.senha,
@@ -15,4 +14,13 @@ export async function criarConta(novaConta) {
     new Date()
   ]);
   return info.insertId;
+}
+
+export async function login(email, senha) {
+  const comando = `
+    SELECT id_usuario, nome FROM usuario
+     WHERE email = ? AND senha = MD5(?)
+  `;
+  const [usuarios] = await connection.query(comando, [email, senha]);
+  return usuarios[0];
 }
